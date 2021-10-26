@@ -37,6 +37,8 @@ for (let i = 0; i < 10; i++) {
   matriu[i]();
 }
 
+
+
 //Nivell 3 exercici 2
 
 (function () {
