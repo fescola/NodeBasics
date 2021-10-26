@@ -24,5 +24,18 @@ function retornValor() {
 retornValor();
 
 //Nivell 3 Exercici 1
-var matriu = [];
-for (let i = 0; i < 10; i++) {}
+var matriu = [10];
+for (let i = 0; i < 10; i++) {
+  matriu[i] = function () {
+    for (let j = 0; j < 10; j++) {
+      console.log(j);
+    }
+  };
+  matriu[i]();
+}
+
+//Nivell 3 exercici 2
+
+(function () {
+  console.log(`Usuari introduit: ${usuari} `);
+})(usuari);
