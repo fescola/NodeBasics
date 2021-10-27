@@ -27,33 +27,25 @@ persona1.dirNom();
 //Nivell 3 Exercici 1
 
 
-class objeto {
-    constructor(tipo){
-        if(new.target === objeto){
-            throw new Error(`Abstract class cannot be instantiated`);
-        }
-        this.tipo = tipo;
+function objecte (nom,tipo){
+    if(new.target === objecte){
+        throw new Error(`Abstract class cannot be instantiated`);
     }
-    write(){
-        console.log(`hola, esto es un:${this.tipo} `);
-    }
+    this.nom = nom;
+    this.tipo = tipo;
+}
+    
+objecte.prototype.write = function(){    
+    console.log(`hola, ${this.target} es un: ${this.tipo} `);
 }
 
-class vehiculo extends objeto{
-    constructor(tipo,color){
-        super(tipo);
-        this.color = color;
-    }
-    metColor(){
-        console.log(this.color);
-    }
+function CreacioObj(...args){
+   objecte.apply(this,args);
 }
 
+CreacioObj.prototype = Object.create(objecte.prototype);
 
-function creacioObj(){
-    var audi =new vehiculo(`coche`, `rojo`);
-
-}
-creacioObj();
-audi.metColor();
-//audi.write();
+var nouObj = new CreacioObj('audi','vehicle');
+var nouObj2 = new CreacioObj('taula','moble');
+console.log(nouObj);
+console.log(nouObj2);
