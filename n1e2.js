@@ -24,8 +24,8 @@ class Persona {
 var persona1 = new Persona("ferran");
 persona1.dirNom();
 
-//Nivell 3 Exercici 1
 
+//Nivell 3 Exercici 1
 
 class objecte {
     constructor(nom,tipo){
@@ -39,27 +39,22 @@ class objecte {
 }
     
 objecte.prototype.write = function(){    
-    console.log(`hola, ${this.target} es un: ${this.tipo} `);
+    console.log(`hola, ${this.nom} es un/a: ${this.tipo} `);
 }
 
-function ObjecteHereu (...args) { 
-    objecte.apply(this, args);
- }
-
-ObjecteHereu.prototype = Object.create(objecte.prototype);
-
-var nouObj = new ObjecteHereu('audi','vehicle');
-
-function crearObj(objName) { 
-
-    objName = new ObjecteHereu('paret','construccio')
- }
-/*
-function CreacioObj(...args){
-   objecte.apply(this,args);
+function ObjHereu(n,t)
+{
+this.nom=n;
+this.tipo = t;
 }
-*/
 
-var nouObj2 = new ObjecteHereu('taula','moble');
-//console.log(nouObj);
-//console.log(nouObj2);
+ObjHereu.prototype=Object.create(objecte.prototype);
+
+var newObj=new ObjHereu("rx7","vehicle");
+var newObj2 = new ObjHereu("RTX 3070", "Targeta Grafica");
+var newObj3 = new ObjHereu("Bagette", "Aliment");
+
+newObj.write();
+newObj2.write();
+newObj3.write();
+
