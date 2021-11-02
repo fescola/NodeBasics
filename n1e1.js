@@ -44,6 +44,8 @@ for (let i = 0 ;i < 10 ;i++) {
 
 
 //Nivell 3 exercici 2
+
+
 let usuari = `escolasarabia@gmail.com`;
 (function () {
   console.log(`Usuari introduit: ${usuari} `);
