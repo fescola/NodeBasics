@@ -1,10 +1,11 @@
 
 //Nivell 1 Exercici 1
-
-(() => {
-    console.log(2+2);
-  })()
- 
+let a = 1;
+let b = 2;
+var x = (() => {
+    return a+b;
+  })(a,b)
+console.log(x);
   // Nivell 2 Exercici 1
 
   let n1ex1 = param =>{
@@ -50,6 +51,13 @@ this.tipo = t;
 
 ObjHereu.prototype=Object.create(objecte.prototype);
 
+function instantObj (id,name,type) { 
+    id = new ObjHereu(name,type);
+    id.write();
+ }
+ var obj1;
+ instantObj(obj1, `rx7`, `vehicle`);
+/*
 var newObj=new ObjHereu("rx7","vehicle");
 var newObj2 = new ObjHereu("RTX 3070", "Targeta Grafica");
 var newObj3 = new ObjHereu("Bagette", "Aliment");
@@ -57,4 +65,4 @@ var newObj3 = new ObjHereu("Bagette", "Aliment");
 newObj.write();
 newObj2.write();
 newObj3.write();
-
+*/
