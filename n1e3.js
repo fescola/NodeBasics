@@ -4,22 +4,36 @@ function suma(src) {
     return new Promise(function(resolve, reject) {
         let resultat = src + 2;
       if(resultat === 4) {
-          resolve(console.log(`No errors, the result is ${resultat}`));
+          resolve(`No errors, the result is ${resultat}`);
         }
       else reject(new Error(`Load error for ${src}`));
     });
   }
-  suma(2);
+
+  //No dona error
+  suma(2)
+    .then(res =>{
+        console.log(res);
+    })
+    .catch(err=>{
+        console.log(err.message);
+    })
+
+//Salta error
+ suma(3)
+    .then(res =>{
+        console.log(res);
+    })
+    .catch(err=>{
+        console.log(err.message);
+    })
 
 //Nivell 1 Exercici 2 
-setTimeout(() => {
-    return 2;
-}, 1000);
+setTimeout(() => 2, 1000);
 
 const ex2 = x => {
 
 }
-
 
 //Nivell 2 Exercici 1
 
@@ -50,7 +64,7 @@ const getEmployee= (emp,id) => {
     if(id<emp.length){
         for(let x = 0; x<=id;x++){
             if(emp[x].id === id){
-                found = emp[x].name;
+                found = emp[x];
             }
         }
         return Promise.resolve(found);
@@ -61,9 +75,7 @@ const getEmployee= (emp,id) => {
 };
 
 getEmployee(employees,2)
-    .then(res =>{
-        console.log(res);
-    })
+    .then(res => console.log(res))
     .catch(err=>{
         console.log(err.message);
     })
@@ -95,9 +107,6 @@ getSalary(employees[1])
 //Nivell 2 Exercici 3
 
 getEmployee(employees,2)
-    .then(res =>{
-        console.log(res);
-    })
-    .catch(err=>{
-        console.log(err.message);
-    })
+    .then(employee => getSalary(employee))
+    .then(salary => console.log(salary))
+    .catch(err=> console.log(err.message))
