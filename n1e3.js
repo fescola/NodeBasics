@@ -3,35 +3,23 @@
 function suma(src) {
     return new Promise(function(resolve, reject) {
         let resultat = src + 2;
-        console.log(`resultat: ${resultat}`)
-      if(resultat === 4) {resolve(console.log(`No errors, the result is ${resultat}`));}
+      if(resultat === 4) {
+          resolve(console.log(`No errors, the result is ${resultat}`));
+        }
       else reject(new Error(`Load error for ${src}`));
     });
   }
-//suma(2); //resol correctament
-//suma(3); //salta error
+  suma(2);
 
 //Nivell 1 Exercici 2 
-/*
-let rand = 3;
+setTimeout(() => {
+    return 2;
+}, 1000);
 
-const funcCallback = (msg) => {
-console.log(`${msg} was printed`);
-setTimeout(funcCallback,2000);
+const ex2 = x => {
+
 }
 
-let exer2 = (result, cb) => { 
-    return new Promise(function(resolve, reject) {
-    resolve (
-        console.log(2),
-        cb(result)
-        );
-    reject(new Error("Whoops!"));
-    });
-}
-
-exer2(rand,funcCallback);
-*/
 
 //Nivell 2 Exercici 1
 
@@ -57,28 +45,59 @@ let salaries = [{
     salary: 2000
 }];
 
-let getEmployee = (emp,id) => { 
-    let found ;
-    for(let x = 0; x<=id;x++){
-        if(emp[x].id === id){
-            found = emp[x].name;
+const getEmployee= (emp,id) => {
+    let found;
+    if(id<emp.length){
+        for(let x = 0; x<=id;x++){
+            if(emp[x].id === id){
+                found = emp[x].name;
+            }
+        }
+        return Promise.resolve(found);
+    }
+    else {
+        reject(new Error(`La ID: ${id} no esta a la llista d'empleats`))
+    }
+};
+
+getEmployee(employees,2)
+    .then(res =>{
+        console.log(res);
+    })
+    .catch(err=>{
+        console.log(err.message);
+    })
+
+//Nivell 2 Exercici 2 
+
+let getSalary = (employee) => { 
+    let salari;
+    for(let x = 0; x<=employee.id;x++){
+        if(salaries[x].id === employee.id){
+            salari =  salaries[x].salary;
         }
     }
     return new Promise(function(resolve, reject) {
-        resolve (found);
-        reject(new Error("Whoops!"));
+        resolve (salari);
+        reject(new Error("No s'ha trobat"));
         });
 
 }
 
-console.log(getEmployee(employees,2));
+getSalary(employees[1])
+    .then(res =>{
+        console.log(res);
+    })
+    .catch(err=>{
+        console.log(err.message);
+    })
 
-//Nivell 2 Exercici 2 
+//Nivell 2 Exercici 3
 
-var getSalary = (emp) =>{
-    for(let x = 0; x<=ID;x++){
-        if(emp[x].id === ID){
-            return emp[x].name;
-        }
-    }
-}
+getEmployee(employees,2)
+    .then(res =>{
+        console.log(res);
+    })
+    .catch(err=>{
+        console.log(err.message);
+    })
