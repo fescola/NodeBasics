@@ -47,6 +47,6 @@ for (let i = 0 ;i < 10 ;i++) {
 
 
 let usuari = `escolasarabia@gmail.com`;
-(function () {
+const a = (function () {
   console.log(`Usuari introduit: ${usuari} `);
 })(usuari);
