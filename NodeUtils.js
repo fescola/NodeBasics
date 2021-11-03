@@ -7,14 +7,15 @@ const recur =() =>{
 
 var myVar = setInterval(recur, 1000);
 
+const { constants } = require('buffer');
 //Nivell 1 exercici 2
 
-const fs = require('fs')
+const fs = require('fs');
+const { buffer } = require('stream');
 
-const content = 'this is a test'
 
-const escriure =()=> {
-fs.writeFile('text.txt',content, err=>{
+const escriure =(arxiu,content)=> {
+fs.writeFile(arxiu,content, err=>{
     if(err) {
         console.error(err)
 
@@ -23,12 +24,12 @@ fs.writeFile('text.txt',content, err=>{
 })
 }
 
-escriure();
+escriure('text.txt','this is a test2');
 
 //Nivell 1 Exercici 3
 
-const llegir =()=>{
-    fs.readFile('text.txt', 'utf8' , (err, data) => {
+const llegir =(document)=>{
+    fs.readFile(document, 'utf8' , (err, data) => {
         if (err) {
           console.error(err)
           return
@@ -37,7 +38,7 @@ const llegir =()=>{
       })
 }
 
-llegir();
+llegir('text.txt');
 
 //Nivell 2 Exercici 1
 
@@ -61,5 +62,16 @@ fs.readdir(testFolder, (err, files) => {
 });
 
 //Nivell 3 Exercici 1
+var temp;
 
+fs.readFile('text.txt', 'utf8', function msg (err,data) {
+  if (err) {
+    return console.log(err);
+  }
+  Buffer.from(data).toString('base64')
+  console.log(`aixo es data1 ${data}`);
+  escriure('text64.txt',data)
+  Buffer.from(data).toString('hex')
+  escriure('textHex.txt',data)
+});
 
