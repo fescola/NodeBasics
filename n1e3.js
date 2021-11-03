@@ -114,4 +114,4 @@ getEmployee(employees,2)
 
 //Nivell 3 Exercici 1
 
-//Ja esta implementat al exercici anterior
+//Ja esta implementat al exercici
