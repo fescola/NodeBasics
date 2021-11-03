@@ -24,8 +24,11 @@ let salaries = [{
 
 
 const getEmployee= (emp,newID) => {
+    let found = emp.find( empleat => empleat.id === newID )
     return new Promise(function(resolve, reject) {
-        resolve (emp.find( empleat => empleat.id === newID ));
+        if(found != undefined)
+        resolve (found);
+        else
         reject (new Error(`La ID: "${newID}" no esta a la llista d'empleats`));
         });
 };
@@ -33,14 +36,17 @@ const getEmployee= (emp,newID) => {
 
 const getSalary = (employee) => { 
     return new Promise(function(resolve, reject) {
-        resolve ((salaries.find( empleat => empleat.id === employee.id )).salary);
+        let salari = (salaries.find( empleat => empleat.id === employee.id )).salary
+        if(salari != undefined)
+        resolve (salari);
+        else
         reject(new Error(`No hi ha la ID seleccionada`));
         });
 
 }
 
 
-getEmployee(employees,2)
+getEmployee(employees,4)
     .then(employee => getSalary(employee))
     .then(salary => console.log(salary))
     .catch(err=> console.log(err.message))
@@ -81,3 +87,4 @@ async function nivell2(){
 nivell2();
 
 //Nivell 3 Exercici 1
+
