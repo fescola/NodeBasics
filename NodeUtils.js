@@ -62,16 +62,15 @@ fs.readdir(testFolder, (err, files) => {
 });
 
 //Nivell 3 Exercici 1
-var temp;
 
 fs.readFile('text.txt', 'utf8', function msg (err,data) {
   if (err) {
     return console.log(err);
   }
-  Buffer.from(data).toString('base64')
-  console.log(`aixo es data1 ${data}`);
-  escriure('text64.txt',data)
-  Buffer.from(data).toString('hex')
-  escriure('textHex.txt',data)
+  let temp = Buffer.from(data).toString('base64')
+  console.log(`aixo es data1 ${temp}`);
+  escriure('text64.txt',temp)
+  temp = Buffer.from(data).toString('hex')
+  escriure('textHex.txt',temp)
 });
 
