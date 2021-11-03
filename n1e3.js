@@ -110,3 +110,8 @@ getEmployee(employees,2)
     .then(employee => getSalary(employee))
     .then(salary => console.log(salary))
     .catch(err=> console.log(err.message))
+
+
+//Nivell 3 Exercici 1
+
+//Ja esta implementat al exercici anterior
