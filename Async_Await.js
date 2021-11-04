@@ -88,3 +88,4 @@ nivell2();
 
 //Nivell 3 Exercici 1
 
+//Els catch de cada exercici controlen els errors
