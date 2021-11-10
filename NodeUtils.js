@@ -24,7 +24,7 @@ fs.writeFile(arxiu,content, err=>{
 })
 }
 
-escriure('text.txt','this is a test2');
+escriure('text.txt','nou msg');
 
 //Nivell 1 Exercici 3
 
@@ -52,9 +52,8 @@ const out = fs.createWriteStream('text.txt.gz')
 inp.pipe(gzip).pipe(out)
 
 //
-
-const testFolder = './';
-
+const os = require('os')
+const testFolder = os.homedir()
 fs.readdir(testFolder, (err, files) => {
   files.forEach(file => {
     console.log(file);
@@ -81,24 +80,61 @@ const initVector = crypto.randomBytes(16);
 const Securitykey = crypto.randomBytes(24);
 
 const encriptar = (doc,type)=>{
+  return new Promise(function(resolve, reject) {
+  fs.readFile(doc, type , (err, data) => {
+    if (err) {
+      console.error(err.message)
+    }
+    else{ 
+    var cipher = crypto.createCipheriv('aes-192-cbc', Securitykey, initVector);
+     var encryptedData = cipher.update(data,type,'binary');
+     encryptedData += cipher.final('binary');
+     
+      resolve(
+        fs.unlinkSync(doc),
+        encryptedData)
+     })
+    }
+  });
+}
+
+//encriptar('text.txt','utf-8')
+encriptar('text64.txt','base64')
+  .then(console.log(encryptedData))
+// encriptar('textHex.txt','hex')
+
+const desencriptar = (doc,type)=>{
   fs.readFile(doc, type , (err, data) => {
     if (err) {
       console.error(err.message)
     }
     else{ 
       console.log(`hey this is ${doc} -  ${data}` )
-    var cipher = crypto.createCipheriv('aes-192-cbc', Securitykey, initVector);
-     var encryptedData = cipher.update(data, type, "hex");
-     encryptedData += cipher.final("hex");
+      data = Buffer.from(data)
+    var decipher = crypto.createDecipheriv('aes-192-cbc', Securitykey, initVector);
+     var decrypted = decipher.update(data,'binary','utf-8');
+     decrypted = Buffer.concat([decrypted, decipher.final('utf-8')]);
 
-     console.log("Encrypted message: " + encryptedData); 
+     console.log("decrypted message: " + decrypted.toString()); 
 
-     escriure(`nou${doc}`,encryptedData)
-     fs.unlinkSync(doc)
+     //escriure(`nou${doc}`,encryptedData)
+     //fs.unlinkSync(doc)
     }
   })
 }
 
-encriptar('text.txt','utf-8')
-encriptar('text64.txt','base64')
-encriptar('textHex.txt','hex')
+
+const encriptar2 = (doc,type)=>{
+    var cipher = crypto.createCipheriv('aes-192-cbc', Securitykey, initVector);
+     var encryptedData = cipher.update(doc,'utf-8','binary');
+     encryptedData += cipher.final('binary');
+     console.log(`encrypted data : ${encryptedData}`)
+     //fs.unlinkSync(doc)
+     var decipher = crypto.createDecipheriv('aes-192-cbc', Securitykey, initVector);
+     var decrypted = decipher.update(encryptedData,'binary','utf-8');
+     decrypted +=  decipher.final('utf-8');
+
+     console.log("decrypted message: " + decrypted.toString());
+}
+
+encriptar2("decodificar dos aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",'utf-8')
