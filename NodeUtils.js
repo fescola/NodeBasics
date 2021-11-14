@@ -24,7 +24,7 @@ fs.writeFile(arxiu,content, err=>{
 })
 }
 
-escriure('text.txt','nou msg');
+escriure('text.txt','Missatge nou');
 
 //Nivell 1 Exercici 3
 
@@ -75,66 +75,68 @@ fs.readFile('text.txt', 'utf8', function msg (err,data) {
 //part 2
 
 const crypto = require("crypto");
+const { Console } = require('console');
 
-const initVector = crypto.randomBytes(16);
-const Securitykey = crypto.randomBytes(24);
+const initVector = Buffer.from([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]);
+const Securitykey = '123456781234567812345678';
 
-const encriptar = (doc,type)=>{
+var cipher = crypto.createCipheriv('aes-192-cbc', Securitykey, initVector);
+cipher.setAutoPadding(true);
+
+var decipher = crypto.createDecipheriv('aes-192-cbc', Securitykey, initVector);
+decipher.setAutoPadding(true);
+
+const encriptar2 = (data,type)=>{
   return new Promise(function(resolve, reject) {
-  fs.readFile(doc, type , (err, data) => {
-    if (err) {
-      console.error(err.message)
-    }
-    else{ 
-    var cipher = crypto.createCipheriv('aes-192-cbc', Securitykey, initVector);
      var encryptedData = cipher.update(data,type,'binary');
      encryptedData += cipher.final('binary');
      
-      resolve(
-        fs.unlinkSync(doc),
-        encryptedData)
-     })
-    }
-  });
+     console.log(`This is encrypted data: 
+     ${encryptedData}`),
+     resolve( 
+       encryptedData)
+       reject(new Error('error a encriptar2'))
+      //encriptar2(missatge,'utf-8'));
+ });
 }
 
-//encriptar('text.txt','utf-8')
-encriptar('text64.txt','base64')
-  .then(console.log(encryptedData))
-// encriptar('textHex.txt','hex')
+const desencriptar2 = (data,type)=>{
+  return new Promise(function(resolve, reject) {
+     var decryptedData = decipher.update(data,'binary',type);
+     console.log(`decrypted data : ${data}`)
+     decryptedData += decipher.final(type);
+     resolve( decryptedData)
+     reject(new Error('error a desencriptar2'))
+      //encriptar2(missatge,'utf-8'));
+ });
+}
 
-const desencriptar = (doc,type)=>{
+const encriptarTest = (doc,type)=>{
   fs.readFile(doc, type , (err, data) => {
     if (err) {
       console.error(err.message)
     }
     else{ 
-      console.log(`hey this is ${doc} -  ${data}` )
-      data = Buffer.from(data)
-    var decipher = crypto.createDecipheriv('aes-192-cbc', Securitykey, initVector);
-     var decrypted = decipher.update(data,'binary','utf-8');
-     decrypted = Buffer.concat([decrypted, decipher.final('utf-8')]);
-
-     console.log("decrypted message: " + decrypted.toString()); 
-
-     //escriure(`nou${doc}`,encryptedData)
-     //fs.unlinkSync(doc)
+     encriptar2(data,type)
+        .then(encriptar => escriure(`nou${doc}`,encriptar.toString()))
+        .then (fs.unlinkSync(doc))
+        .catch(err=> console.log(err.message))
     }
-  })
+  });
 }
-
-
-const encriptar2 = (doc,type)=>{
-    var cipher = crypto.createCipheriv('aes-192-cbc', Securitykey, initVector);
-     var encryptedData = cipher.update(doc,'utf-8','binary');
-     encryptedData += cipher.final('binary');
-     console.log(`encrypted data : ${encryptedData}`)
-     //fs.unlinkSync(doc)
-     var decipher = crypto.createDecipheriv('aes-192-cbc', Securitykey, initVector);
-     var decrypted = decipher.update(encryptedData,'binary','utf-8');
-     decrypted +=  decipher.final('utf-8');
-
-     console.log("decrypted message: " + decrypted.toString());
+const desencriptarTest = (doc,type)=>{
+  fs.readFile(doc, type , (err, data) => {
+    if (err) {
+      console.error(err.message)
+    }
+    else{ 
+      desencriptar2(data,type)
+        .then(desencriptar => console.log(`Missatge desencriptat: ${desencriptar}`))
+        .catch (err=> console.log(err.message))
+    }
+  });
 }
+encriptarTest('text.txt','utf8')
+desencriptarTest('noutext.txt','utf8');
 
-encriptar2("decodificar dos aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",'utf-8')
+//He aconseguit que funcioni amb utf8, base64 em dona errors i hex em dona uns altres
